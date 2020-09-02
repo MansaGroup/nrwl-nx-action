@@ -3,16 +3,23 @@ author: 'Mansa Group'
 description: 'Wrap the Nx monorepo tool and execute tasks depending on the action context'
 inputs:
   targets:
-    description: "Comma-separated list of tasks to execute sequencially"
+    description: "Comma-separated list of targets to execute"
+    required: true
+  projects:
+    description: "Comma-separated list of projects to use"
     required: true
   all: # Mutualy exclusive with `affected`
-    description: "Run the targets accross all projects"
+    description: "Run the targets on all projects"
     required: false
     default: 'false'
   affected: # Mutualy exclusive with `all`
     description: "Use the Nx' affected subcommand to only process affected projects"
     required: false
     default: 'true'
+  parallel:
+    description: "Run the tasks in parallel (can be expensive)"
+    required: false
+    default: 'false'
   args:
     description: "Optional arguments to append to the Nx command"
     required: false
