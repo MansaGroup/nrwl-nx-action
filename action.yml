@@ -1,0 +1,27 @@
+name: 'Nrwl Nx'
+author: 'Mansa Group'
+description: 'Wrap the Nx monorepo tool and execute tasks depending on the action context'
+inputs:
+  targets:
+    description: "Comma-separated list of tasks to execute sequencially"
+    required: true
+  all: # Mutualy exclusive with `affected`
+    description: "Run the targets accross all projects"
+    required: false
+    default: 'false'
+  affected: # Mutualy exclusive with `all`
+    description: "Use the Nx' affected subcommand to only process affected projects"
+    required: false
+    default: 'true'
+  args:
+    description: "Optional arguments to append to the Nx command"
+    required: false
+    default: ''
+runs:
+  using: 'composite'
+  steps: 
+    - run: $/script.sh
+      shell: bash
+branding:
+  icon: 'droplet' # Nx's logo contains a wave, lets use a droplet
+  color: 'blue'
