@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ ! command -v nx &>/dev/null ]]
+if ! command -v nx &>/dev/null
 then
     yarn global add @nrwl/cli
 fi
