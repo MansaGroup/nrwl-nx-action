@@ -37,6 +37,8 @@ runs:
         INPUT_AFFECTED: ${{ inputs.affected }}
         INPUT_PARALLEL: ${{ inputs.parallel }}
         INPUT_ARGS: ${{ inputs.args }}
+        PR_BASE_REF_SHA: ${{ github.event.pull_request.base.sha }}
+        PR_HEAD_REF_SHA: ${{ github.event.pull_request.head.sha }}
 branding:
   icon: 'terminal'
   color: 'blue'

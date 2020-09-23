@@ -41,18 +41,18 @@ then
         echo "::endgroup::"
     done
 else
-    if [[ $GITHUB_BASE_REF ]]
+    if [[ $PR_BASE_REF_SHA ]]
     then
-        export NX_BASE=$GITHUB_BASE_REF
-        export NX_HEAD=$GITHUB_HEAD_REF
+        export NX_BASE=$PR_BASE_REF_SHA
+        export NX_HEAD=$PR_HEAD_REF_SHA
     else
         export NX_BASE=$(git rev-parse HEAD~1)
         export NX_HEAD=$(git rev-parse HEAD)
     fi
 
     echo "Will run Nx with:"
-    echo "- Base: $NX_BASE"
-    echo "- Head: $NX_HEAD"
+    echo "- Base: $NX_BASE ($GITHUB_BASE_REF)"
+    echo "- Head: $NX_HEAD ($GITHUB_HEAD_REF)"
 
     for target in $(echo $INPUT_TARGETS | sed "s/,/ /g")
     do
