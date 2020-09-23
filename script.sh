@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euxo pipefail
+set -euo pipefail
 
 echo "::group::Ensuring @nrwl/cli is installed"
 NX="$(yarn bin)/nx"
@@ -10,6 +10,8 @@ then
     echo "::error::Could not found nx, have you ran npm/yarn before?"
     exit 1
 fi
+
+echo "Found Nx at $NX."
 echo "::endgroup::"
 
 NX_ARGS="$INPUT_ARGS"
@@ -47,6 +49,10 @@ else
         export NX_BASE=$(git rev-parse HEAD~1)
         export NX_HEAD=$(git rev-parse HEAD)
     fi
+
+    echo "Will run Nx with:"
+    echo "- Base: $NX_BASE"
+    echo "- Head: $NX_HEAD"
 
     for target in $(echo $INPUT_TARGETS | sed "s/,/ /g")
     do
