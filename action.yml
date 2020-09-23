@@ -27,7 +27,7 @@ inputs:
 runs:
   using: 'composite'
   steps: 
-    - run: ${{ github.action_path }}/script.sh
+    - run: bash ${{ github.action_path }}/script.sh
       shell: bash
 branding:
   icon: 'droplet' # Nx's logo contains a wave, lets use a droplet
