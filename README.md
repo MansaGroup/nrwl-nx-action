@@ -1,4 +1,4 @@
-![Banner](.github/assets/banner.png)
+![Banner](.github/assets/banner-thin.png)
 
 # Nrwl Nx Action
 
