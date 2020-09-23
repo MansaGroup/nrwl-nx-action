@@ -38,5 +38,5 @@ runs:
         INPUT_PARALLEL: ${{ inputs.parallel }}
         INPUT_ARGS: ${{ inputs.args }}
 branding:
-  icon: 'droplet' # Nx's logo contains a wave, lets use a droplet
+  icon: 'terminal'
   color: 'blue'

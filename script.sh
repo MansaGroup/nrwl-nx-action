@@ -2,16 +2,20 @@
 
 set -euxo pipefail
 
-env
+NX="nx"
 
 if ! command -v nx &>/dev/null
 then
     yarn global add @nrwl/cli
+    NX="$(yarn global bin)/nx"
+    echo "::add-path::$(yarn global bin)"
 fi
+
+NX_ARGS="$INPUT_ARGS"
 
 if [[ "$INPUT_PARALLEL" == "true" ]]
 then
-    INPUT_AFFECTED="--parallel $INPUT_AFFECTED"
+    NX_ARGS="--parallel $NX_ARGS"
 fi
 
 if [[ "$INPUT_PROJECTS" != "" ]]
@@ -20,14 +24,14 @@ then
     do
         for target in $(echo $INPUT_TARGETS | sed "s/,/ /g")
         do
-            nx $target $project $INPUT_ARGS
+            $NX $target $project $NX_ARGS
         done
     done
 elif [[ "$INPUT_ALL" == "true" ]] || [[ "$INPUT_AFFECTED" == "false" ]]
 then
     for target in $(echo $INPUT_TARGETS | sed "s/,/ /g")
     do
-        nx run-many --target=$target --all $INPUT_ARGS
+        $NX run-many --target=$target --all $NX_ARGS
     done
 else
     if [[ $GITHUB_BASE_REF ]]
@@ -41,6 +45,6 @@ else
 
     for target in $(echo $INPUT_TARGETS | sed "s/,/ /g")
     do
-        nx affected --target=$target --base=$NX_BASE --head=$NX_HEAD $INPUT_ARGS
+        $NX affected --target=$target --base=$NX_BASE --head=$NX_HEAD $NX_ARGS
     done
 fi
