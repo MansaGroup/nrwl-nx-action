@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-echo "::start-group::Ensuring @nrwl/nx is installed"
+echo "::group::Ensuring @nrwl/cli is installed"
 NX="$(yarn bin)/nx"
 
 if [[ ! -x "$NX" ]]
@@ -10,7 +10,7 @@ then
     echo "::error::Could not found nx, have you ran npm/yarn before?"
     exit 1
 fi
-echo "::end-group"
+echo "::endgroup::"
 
 NX_ARGS="$INPUT_ARGS"
 
@@ -25,18 +25,18 @@ then
     do
         for target in $(echo $INPUT_TARGETS | sed "s/,/ /g")
         do
-            echo "::start-group::Running target '$target' for project '$project'"
+            echo "::group::Running target '$target' for project '$project'"
             $NX $target $project $NX_ARGS
-            echo "::end-group"
+            echo "::endgroup::"
         done
     done
 elif [[ "$INPUT_ALL" == "true" ]] || [[ "$INPUT_AFFECTED" == "false" ]]
 then
     for target in $(echo $INPUT_TARGETS | sed "s/,/ /g")
     do
-        echo "::start-group::Running target '$target' for all projects"
+        echo "::group::Running target '$target' for all projects"
         $NX run-many --target=$target --all $NX_ARGS
-        echo "::end-group"
+        echo "::endgroup::"
     done
 else
     if [[ $GITHUB_BASE_REF ]]
@@ -50,8 +50,8 @@ else
 
     for target in $(echo $INPUT_TARGETS | sed "s/,/ /g")
     do
-        echo "::start-group::Running target '$target' for all affected projects"
+        echo "::group::Running target '$target' for all affected projects"
         $NX affected --target=$target --base=$NX_BASE --head=$NX_HEAD $NX_ARGS
-        echo "::end-group"
+        echo "::endgroup::"
     done
 fi
