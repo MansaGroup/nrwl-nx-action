@@ -31,7 +31,7 @@ This behavior can be modified using the different inputs (see below).
 > workflow.yml
 ```yaml
 ...
-  - uses: mansagroup/nrwl-nx-action@latest
+  - uses: mansagroup/nrwl-nx-action@v1
     with:
       targets: lint,build,deploy
 ...
@@ -89,7 +89,7 @@ This will run the `build` target on all the affected projects.
 > workflow.yml
 ```yaml
 ...
-  - uses: mansagroup/nrwl-nx-action@latest
+  - uses: mansagroup/nrwl-nx-action@v1
     with:
       targets: build
       affected: 'true' # Defaults to true, therefore optional
@@ -106,7 +106,7 @@ projects of the workspace.
 > workflow.yml
 ```yaml
 ...
-  - uses: mansagroup/nrwl-nx-action@latest
+  - uses: mansagroup/nrwl-nx-action@v1
     with:
       targets: lint,test,build
       all: 'true'
@@ -123,7 +123,7 @@ only.
 > workflow.yml
 ```yaml
 ...
-  - uses: mansagroup/nrwl-nx-action@latest
+  - uses: mansagroup/nrwl-nx-action@v1
     with:
       targets: build
       projects: frontend,backend
@@ -140,7 +140,7 @@ in parallel.
 > workflow.yml
 ```yaml
 ...
-  - uses: mansagroup/nrwl-nx-action@latest
+  - uses: mansagroup/nrwl-nx-action@v1
     with:
       targets: lint
       all: 'true'
