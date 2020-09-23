@@ -2,6 +2,8 @@
 
 set -euxo pipefail
 
+env
+
 if ! command -v nx &>/dev/null
 then
     yarn global add @nrwl/cli
