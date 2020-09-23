@@ -27,7 +27,7 @@ inputs:
 runs:
   using: 'composite'
   steps: 
-    - run: bash ${{ github.action_path }}/script.sh
+    - run: ${{ github.action_path }}/script.sh
       shell: bash
       working-directory: ${{ github.workspace }}
       env:
