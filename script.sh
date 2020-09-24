@@ -21,24 +21,26 @@ then
     NX_ARGS="--parallel $NX_ARGS"
 fi
 
+function runNx {
+    command="$NX $@"
+    echo -e "\e[34m$command\e[0m"
+    $command
+}
+
 if [[ "$INPUT_PROJECTS" != "" ]]
 then
     for project in $(echo $INPUT_PROJECTS | sed "s/,/ /g")
     do
         for target in $(echo $INPUT_TARGETS | sed "s/,/ /g")
         do
-            echo "::group::Running target '$target' for project '$project'"
-            $NX $target $project $NX_ARGS
-            echo "::endgroup::"
+            runNx $target $project $NX_ARGS
         done
     done
 elif [[ "$INPUT_ALL" == "true" ]] || [[ "$INPUT_AFFECTED" == "false" ]]
 then
     for target in $(echo $INPUT_TARGETS | sed "s/,/ /g")
     do
-        echo "::group::Running target '$target' for all projects"
-        $NX run-many --target=$target --all $NX_ARGS
-        echo "::endgroup::"
+        runNx run-many --target=$target --all $NX_ARGS
     done
 else
     if [[ $PR_BASE_REF_SHA ]]
@@ -56,8 +58,6 @@ else
 
     for target in $(echo $INPUT_TARGETS | sed "s/,/ /g")
     do
-        echo "::group::Running target '$target' for all affected projects"
-        $NX affected --target=$target --base=$NX_BASE --head=$NX_HEAD $NX_ARGS
-        echo "::endgroup::"
+        runNx affected --target=$target --base=$NX_BASE --head=$NX_HEAD $NX_ARGS
     done
 fi
