@@ -33,18 +33,14 @@ then
     do
         for target in $(echo $INPUT_TARGETS | sed "s/,/ /g")
         do
-            echo "::group::Running target '$target' for project '$project'"
             runNx $target $project $NX_ARGS
-            echo "::endgroup::"
         done
     done
 elif [[ "$INPUT_ALL" == "true" ]] || [[ "$INPUT_AFFECTED" == "false" ]]
 then
     for target in $(echo $INPUT_TARGETS | sed "s/,/ /g")
     do
-        echo "::group::Running target '$target' for all projects"
         runNx run-many --target=$target --all $NX_ARGS
-        echo "::endgroup::"
     done
 else
     if [[ $PR_BASE_REF_SHA ]]
@@ -62,8 +58,6 @@ else
 
     for target in $(echo $INPUT_TARGETS | sed "s/,/ /g")
     do
-        echo "::group::Running target '$target' for all affected projects"
         runNx affected --target=$target --base=$NX_BASE --head=$NX_HEAD $NX_ARGS
-        echo "::endgroup::"
     done
 fi
