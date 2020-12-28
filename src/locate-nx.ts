@@ -1,10 +1,16 @@
 import * as core from '@actions/core';
 import { promises as fsPromises } from 'fs';
 
-import { CommandBuilder, NxCommandWrapper } from './command-builder';
+import { CommandBuilder, CommandWrapper } from './command-builder';
 
-async function loadPackageJson(): Promise<Record<string, any>> {
-  return JSON.parse(await fsPromises.readFile('package.json', 'utf8'));
+interface PackageJsonLike {
+  scripts?: Record<string, string>;
+}
+
+async function loadPackageJson(): Promise<PackageJsonLike> {
+  return JSON.parse(
+    await fsPromises.readFile('package.json', 'utf8'),
+  ) as PackageJsonLike;
 }
 
 async function assertHasNxPackageScript(): Promise<void> {
@@ -16,7 +22,7 @@ async function assertHasNxPackageScript(): Promise<void> {
 
   core.info('Found package.json file');
 
-  if (typeof packageJson?.scripts?.nx !== 'string')
+  if (typeof packageJson.scripts?.nx !== 'string')
     throw new Error(
       "Failed to locate the 'nx' script in package.json, did you setup your project with Nx's CLI?",
     );
@@ -24,7 +30,7 @@ async function assertHasNxPackageScript(): Promise<void> {
   core.info("Found 'nx' script inside package.json file");
 }
 
-export async function locateNx(): Promise<NxCommandWrapper> {
+export async function locateNx(): Promise<CommandWrapper> {
   await assertHasNxPackageScript();
 
   return fsPromises
@@ -32,7 +38,7 @@ export async function locateNx(): Promise<NxCommandWrapper> {
     .then(() => {
       core.info('Using npm as package manager');
       return new CommandBuilder()
-        .withBinary('npm')
+        .withCommand('npm')
         .withArgs('run', 'nx', '--')
         .build();
     })
@@ -41,7 +47,10 @@ export async function locateNx(): Promise<NxCommandWrapper> {
         .stat('yarn.lock')
         .then(() => {
           core.info('Using yarn as package manager');
-          return new CommandBuilder().withBinary('yarn').withArgs('nx').build();
+          return new CommandBuilder()
+            .withCommand('yarn')
+            .withArgs('nx')
+            .build();
         })
         .catch(() => {
           throw new Error(

@@ -3,7 +3,7 @@ import * as exec from '@actions/exec';
 import * as github from '@actions/github';
 import * as Webhooks from '@octokit/webhooks';
 
-import { NxCommandWrapper } from './command-builder';
+import { CommandWrapper } from './command-builder';
 import { locateNx } from './locate-nx';
 
 interface Inputs {
@@ -25,14 +25,14 @@ async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
     let base = '';
     await exec.exec('git', ['rev-parse', 'HEAD~1'], {
       listeners: {
-        stdout: (data: Buffer) => (base += data),
+        stdout: (data: Buffer) => (base += data.toString()),
       },
     });
 
     let head = '';
     await exec.exec('git', ['rev-parse', 'HEAD'], {
       listeners: {
-        stdout: (data: Buffer) => (head += data),
+        stdout: (data: Buffer) => (head += data.toString()),
       },
     });
 
@@ -43,7 +43,7 @@ async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
   }
 }
 
-async function runNx(inputs: Inputs, nx: NxCommandWrapper): Promise<void> {
+async function runNx(inputs: Inputs, nx: CommandWrapper): Promise<void> {
   const args = inputs.args;
   if (inputs.parallel) {
     args.push('--parallel', `--maxParallel=${inputs.maxParallel}`);
@@ -105,7 +105,10 @@ async function main(): Promise<void> {
       .filter((arg) => arg.length > 0),
   };
 
-  const nx = await core.group('🔍 Ensuring Nx is available', locateNx);
+  const nx = await core.group<CommandWrapper>(
+    '🔍 Ensuring Nx is available',
+    locateNx,
+  );
   return runNx(inputs, nx);
 }
 
