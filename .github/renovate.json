@@ -1,0 +1,19 @@
+{
+  "extends": ["config:base"],
+  "reviewersFromCodeOwners": true,
+  "labels": ["type:dependencies :wrench:"],
+  "enabledManagers": ["github-actions", "npm"],
+  "node": {
+    "supportPolicy": ["lts_latest"]
+  },
+  "packageRules": [
+    {
+      "updateTypes": ["patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
+      "groupName": "Typescript DefinitelyTyped",
+      "packagePatterns": ["^@types/"]
+    }
+  ]
+}

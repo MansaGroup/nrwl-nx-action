@@ -10,12 +10,14 @@
         "plugin:import/typescript"
       ],
       "env": {
-        "node": true
+        "node": true,
+        "es6": true
       },
       "parserOptions": {
-        "project": "./tsconfig.eslint.json"
+        "project": "./tsconfig.json"
       },
       "plugins": [
+        "@typescript-eslint",
         "sonarjs",
         "import",
         "eslint-plugin-import-helpers",
@@ -68,6 +70,10 @@
     },
     {
       "files": ["*.*spec.ts"],
+      "plugins": ["jest"],
+      "env": {
+        "jest/globals": true
+      },
       "rules": {
         "@typescript-eslint/unbound-method": "off",
         "sonarjs/no-duplicate-string": "warn"

@@ -22,8 +22,6 @@ async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
       .payload as Webhooks.EventPayloads.WebhookPayloadPullRequest;
     return [prPayload.pull_request.base.sha, prPayload.pull_request.head.sha];
   } else {
-    core.setCommandEcho(true);
-
     let base = '';
     await exec.exec('git', ['rev-parse', 'HEAD~1'], {
       listeners: {
@@ -37,8 +35,6 @@ async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
         stdout: (data: Buffer) => (head += data),
       },
     });
-
-    core.setCommandEcho(false);
 
     return [
       base.replace(/(\r\n|\n|\r)/gm, ''),
@@ -66,7 +62,12 @@ async function runNx(inputs: Inputs, nx: NxCommandWrapper): Promise<void> {
   } else {
     const boundaries = await core.group(
       '🏷 Retrieving Git boundaries (affected command)',
-      retrieveGitBoundaries,
+      () =>
+        retrieveGitBoundaries().then((boundaries) => {
+          core.info(`Base boundary: ${boundaries[0]}`);
+          core.info(`Head boundary: ${boundaries[1]}`);
+          return boundaries;
+        }),
     );
 
     for (const target of inputs.targets) {
