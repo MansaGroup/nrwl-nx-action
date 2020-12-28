@@ -22,6 +22,8 @@ async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
       .payload as Webhooks.EventPayloads.WebhookPayloadPullRequest;
     return [prPayload.pull_request.base.sha, prPayload.pull_request.head.sha];
   } else {
+    core.setCommandEcho(true);
+
     let base = '';
     await exec.exec('git', ['rev-parse', 'HEAD~1'], {
       listeners: {
@@ -35,6 +37,8 @@ async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
         stdout: (data: Buffer) => (head += data),
       },
     });
+
+    core.setCommandEcho(false);
 
     return [
       base.replace(/(\r\n|\n|\r)/gm, ''),

@@ -14,14 +14,14 @@ async function assertHasNxPackageScript(): Promise<void> {
     );
   });
 
-  core.debug('Found package.json file');
+  core.info('Found package.json file');
 
   if (typeof packageJson?.scripts?.nx !== 'string')
     throw new Error(
       "Failed to locate the 'nx' script in package.json, did you setup your project with Nx's CLI?",
     );
 
-  core.debug("Found 'nx' script inside package.json file");
+  core.info("Found 'nx' script inside package.json file");
 }
 
 export async function locateNx(): Promise<NxCommandWrapper> {
@@ -30,7 +30,7 @@ export async function locateNx(): Promise<NxCommandWrapper> {
   return fsPromises
     .stat('package-lock.json')
     .then(() => {
-      core.debug('Using npm as package manager');
+      core.info('Using npm as package manager');
       return new CommandBuilder()
         .withBinary('npm')
         .withArgs('run', 'nx', '--')
@@ -40,7 +40,7 @@ export async function locateNx(): Promise<NxCommandWrapper> {
       return fsPromises
         .stat('yarn.lock')
         .then(() => {
-          core.debug('Using yarn as package manager');
+          core.info('Using yarn as package manager');
           return new CommandBuilder().withBinary('yarn').withArgs('nx').build();
         })
         .catch(() => {
