@@ -105,11 +105,12 @@ async function main(): Promise<void> {
       .filter((arg) => arg.length > 0),
   };
 
-  const nx = await core.group<CommandWrapper>(
-    '🔍 Ensuring Nx is available',
-    locateNx,
-  );
-  return runNx(inputs, nx);
+  return core
+    .group<CommandWrapper>('🔍 Ensuring Nx is available', locateNx)
+    .then((nx) => runNx(inputs, nx))
+    .catch((err) => {
+      core.setFailed(err);
+    });
 }
 
 void main();

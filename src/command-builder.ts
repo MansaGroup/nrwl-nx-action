@@ -3,7 +3,7 @@ import * as exec from '@actions/exec';
 export type CommandWrapper = (
   args?: string[],
   options?: exec.ExecOptions,
-) => Promise<void>;
+) => Promise<number>;
 
 export class CommandBuilder {
   private command: string = '';
@@ -15,17 +15,13 @@ export class CommandBuilder {
     }
 
     return async (args?: string[], options?: exec.ExecOptions) => {
-      const exitCode = await exec.exec(
+      return exec.exec(
         this.command,
         [...this.args, ...(args ?? [])]
           .filter((arg) => arg.length > 0)
           .map((arg) => arg.trim()),
         options,
       );
-
-      if (exitCode !== 0) {
-        throw new Error(`Process exited with code ${exitCode}`);
-      }
     };
   }
 
