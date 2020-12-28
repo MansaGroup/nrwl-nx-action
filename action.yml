@@ -3,13 +3,13 @@ author: 'Mansa Group'
 description: 'Wrap the Nx monorepo tool and execute tasks depending on the action context'
 inputs:
   targets:
-    description: "Comma-separated list of targets to execute"
+    description: 'Comma-separated list of targets to execute'
     required: true
   projects:
-    description: "Comma-separated list of projects to use"
-    required: true
+    description: 'Comma-separated list of projects to use'
+    required: false
   all: # Mutualy exclusive with `affected`
-    description: "Run the targets on all projects"
+    description: 'Run the targets on all projects'
     required: false
     default: 'false'
   affected: # Mutualy exclusive with `all`
@@ -17,28 +17,20 @@ inputs:
     required: false
     default: 'true'
   parallel:
-    description: "Run the tasks in parallel (can be expensive)"
+    description: 'Run the tasks in parallel (can be expensive)'
     required: false
     default: 'false'
+  maxParallel:
+    description: 'Number of tasks to execute in parallel (can be expensive)'
+    required: false
+    default: '3'
   args:
-    description: "Optional arguments to append to the Nx command"
+    description: 'Optional arguments to append to the Nx command'
     required: false
     default: ''
 runs:
-  using: 'composite'
-  steps: 
-    - run: ${{ github.action_path }}/script.sh
-      shell: bash
-      working-directory: ${{ github.workspace }}
-      env:
-        INPUT_TARGETS: ${{ inputs.targets }}
-        INPUT_PROJECTS: ${{ inputs.projects }}
-        INPUT_ALL: ${{ inputs.all }}
-        INPUT_AFFECTED: ${{ inputs.affected }}
-        INPUT_PARALLEL: ${{ inputs.parallel }}
-        INPUT_ARGS: ${{ inputs.args }}
-        PR_BASE_REF_SHA: ${{ github.event.pull_request.base.sha }}
-        PR_HEAD_REF_SHA: ${{ github.event.pull_request.head.sha }}
+  using: 'node12'
+  main: 'dist/index.js'
 branding:
   icon: 'terminal'
   color: 'blue'

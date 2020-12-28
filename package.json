@@ -1,0 +1,70 @@
+{
+  "name": "nrwl-nx-action",
+  "version": "1.0.0",
+  "description": "![Banner](.github/assets/banner-thin.png)",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc && ncc build -m",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MansaGroup/nrwl-nx-action.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MansaGroup/nrwl-nx-action/issues"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "header-max-length": [
+        2,
+        "always",
+        85
+      ]
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --fix",
+    "*.{md,yml,html,css,scss,json}": "prettier --write"
+  },
+  "homepage": "https://github.com/MansaGroup/nrwl-nx-action#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.11.0",
+    "@typescript-eslint/parser": "^4.11.0",
+    "@vercel/ncc": "^0.26.1",
+    "eslint": "^7.16.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import-helpers": "^1.1.0",
+    "eslint-plugin-prettier": "^3.3.0",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "eslint-plugin-unused-imports": "^1.0.1",
+    "husky": "^4.3.6",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/exec": "^1.0.4",
+    "@actions/github": "^4.0.0",
+    "@octokit/webhooks": "^7.21.0"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "root": true,
+  "overrides": [
+    {
+      "files": ["*.ts", "*.js"],
+      "extends": [
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:sonarjs/recommended",
+        "plugin:import/recommended",
+        "plugin:import/typescript"
+      ],
+      "env": {
+        "node": true
+      },
+      "parserOptions": {
+        "project": "./tsconfig.eslint.json"
+      },
+      "plugins": [
+        "sonarjs",
+        "import",
+        "eslint-plugin-import-helpers",
+        "unused-imports"
+      ],
+      "rules": {
+        "import-helpers/order-imports": [
+          "error",
+          {
+            "newlinesBetween": "always",
+            "groups": ["module", ["parent", "sibling", "index"]],
+            "alphabetize": {
+              "order": "asc",
+              "ignoreCase": true
+            }
+          }
+        ],
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          {
+            "vars": "all",
+            "varsIgnorePattern": "^_",
+            "args": "after-used",
+            "argsIgnorePattern": "^_",
+            "ignoreRestSiblings": true
+          }
+        ],
+        "unused-imports/no-unused-imports-ts": ["error"],
+        "unused-imports/no-unused-vars-ts": [
+          "warn",
+          {
+            "vars": "all",
+            "varsIgnorePattern": "^_",
+            "args": "after-used",
+            "argsIgnorePattern": "^_",
+            "ignoreRestSiblings": true
+          }
+        ],
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/ban-types": "off",
+        "@typescript-eslint/restrict-template-expressions": "off",
+        "jsdoc/require-param-type": "off",
+        "jsdoc/require-returns-type": "off",
+        "jsdoc/require-jsdoc": "off"
+      }
+    },
+    {
+      "files": ["*.*spec.ts"],
+      "rules": {
+        "@typescript-eslint/unbound-method": "off",
+        "sonarjs/no-duplicate-string": "warn"
+      }
+    },
+    {
+      "files": ["*.ts", "*.js", "*.md", "*.yml", "*.yaml", "*.json"],
+      "extends": ["plugin:prettier/recommended"],
+      "plugins": ["prettier"]
+    }
+  ]
+}
