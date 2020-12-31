@@ -66,6 +66,7 @@ export async function locateNx(): Promise<CommandWrapper> {
                 throw new Error(
                   'Failed to detect your package manager, are you using npm or yarn?',
                 );
+            });
         });
     });
 }
