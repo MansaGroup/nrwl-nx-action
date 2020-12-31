@@ -59,7 +59,7 @@ export async function locateNx(): Promise<CommandWrapper> {
               core.info('Using pnpm as package manager');
               return new CommandBuilder()
                 .withCommand('pnpm')
-                .withArgs('nx')
+                .withArgs('run', 'nx', '--')
                 .build();
               })
               .catch(() => {
