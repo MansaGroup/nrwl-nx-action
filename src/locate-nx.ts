@@ -53,9 +53,20 @@ export async function locateNx(): Promise<CommandWrapper> {
             .build();
         })
         .catch(() => {
-          throw new Error(
-            'Failed to detect your package manager, are you using npm or yarn?',
-          );
+          return fsPromises
+            .stat('pnpm-lock.yaml')
+            .then(() => {
+              core.info('Using pnpm as package manager');
+              return new CommandBuilder()
+                .withCommand('pnpm')
+                .withArgs('nx')
+                .build();
+              })
+              .catch(() => {
+                throw new Error(
+                  'Failed to detect your package manager, are you using npm or yarn?',
+                );
+            });
         });
     });
 }
