@@ -30,43 +30,52 @@ async function assertHasNxPackageScript(): Promise<void> {
   core.info("Found 'nx' script inside package.json file");
 }
 
+async function tryLocate(
+  entries: [pmName: string, filePath: string, factory: () => CommandWrapper][],
+): Promise<CommandWrapper> {
+  if (entries.length === 0) {
+    throw new Error(
+      'Failed to detect your package manager, are you using npm or yarn?',
+    );
+  }
+
+  const [entry, ...rest] = entries;
+
+  return fsPromises
+    .stat(entry[1])
+    .then(() => {
+      core.info(`Using ${entry[0]} as package manager`);
+      return entry[2]();
+    })
+    .catch(() => tryLocate(rest));
+}
+
 export async function locateNx(): Promise<CommandWrapper> {
   await assertHasNxPackageScript();
 
-  return fsPromises
-    .stat('package-lock.json')
-    .then(() => {
-      core.info('Using npm as package manager');
-      return new CommandBuilder()
-        .withCommand('npm')
-        .withArgs('run', 'nx', '--')
-        .build();
-    })
-    .catch(() => {
-      return fsPromises
-        .stat('yarn.lock')
-        .then(() => {
-          core.info('Using yarn as package manager');
-          return new CommandBuilder()
-            .withCommand('yarn')
-            .withArgs('nx')
-            .build();
-        })
-        .catch(() => {
-          return fsPromises
-            .stat('pnpm-lock.yaml')
-            .then(() => {
-              core.info('Using pnpm as package manager');
-              return new CommandBuilder()
-                .withCommand('pnpm')
-                .withArgs('run', 'nx', '--')
-                .build();
-              })
-              .catch(() => {
-                throw new Error(
-                  'Failed to detect your package manager, are you using npm or yarn?',
-                );
-            });
-        });
-    });
+  return tryLocate([
+    [
+      'npm',
+      'package-lock.json',
+      () =>
+        new CommandBuilder()
+          .withCommand('npm')
+          .withArgs('run', 'nx', '--')
+          .build(),
+    ],
+    [
+      'yarn',
+      'yarn.lock',
+      () => new CommandBuilder().withCommand('yarn').withArgs('nx').build(),
+    ],
+    [
+      'pnpm',
+      'pnpm-lock.yaml',
+      () =>
+        new CommandBuilder()
+          .withCommand('pnpm')
+          .withArgs('run', 'nx', '--')
+          .build(),
+    ],
+  ]);
 }
