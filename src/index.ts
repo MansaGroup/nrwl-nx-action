@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as github from '@actions/github';
-import * as Webhooks from '@octokit/webhooks';
+import { PullRequest } from '@octokit/webhooks-definitions/schema';
 
 import { CommandWrapper } from './command-builder';
 import { locateNx } from './locate-nx';
@@ -18,9 +18,8 @@ interface Inputs {
 
 async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
   if (github.context.eventName === 'pull_request') {
-    const prPayload = github.context
-      .payload as Webhooks.EventPayloads.WebhookPayloadPullRequest;
-    return [prPayload.pull_request.base.sha, prPayload.pull_request.head.sha];
+    const prPayload = github.context.payload.pull_request as PullRequest;
+    return [prPayload.base.sha, prPayload.head.sha];
   } else {
     let base = '';
     await exec.exec('git', ['rev-parse', 'HEAD~1'], {
