@@ -1,19 +1,28 @@
 {
   "extends": ["config:base"],
-  "reviewersFromCodeOwners": true,
   "labels": ["type:dependencies :wrench:"],
   "enabledManagers": ["github-actions", "npm"],
+  "assigneesFromCodeOwners": true,
+  "assigneesSampleSize": 1,
+  "reviewersFromCodeOwners": true,
+  "reviewersSampleSize": 1,
+  "updateNotScheduled": false,
+  "stabilityDays": 3,
+  "prCreation": "not-pending",
+  "vulnerabilityAlerts": {
+    "labels": ["priority:critical :fire:"]
+  },
   "node": {
     "supportPolicy": ["lts_latest"]
   },
   "packageRules": [
     {
-      "updateTypes": ["patch", "pin", "digest"],
+      "updateTypes": ["pin", "digest"],
       "automerge": true
     },
     {
-      "groupName": "Typescript DefinitelyTyped",
-      "packagePatterns": ["^@types/"]
+      "depTypeList": ["devDependencies"],
+      "automerge": true
     }
   ]
 }
