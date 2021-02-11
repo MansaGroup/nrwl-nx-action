@@ -52,7 +52,7 @@
     "@commitlint/config-conventional": "11.0.0",
     "@typescript-eslint/eslint-plugin": "4.11.0",
     "@typescript-eslint/parser": "4.11.0",
-    "@vercel/ncc": "0.26.1",
+    "@vercel/ncc": "0.27.0",
     "eslint": "7.16.0",
     "eslint-config-airbnb-base": "14.2.1",
     "eslint-config-prettier": "7.1.0",
