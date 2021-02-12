@@ -14,6 +14,7 @@ interface Inputs {
   parallel: boolean;
   maxParallel: number;
   args: string[];
+  workingDirectory?: string;
 }
 
 async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
@@ -102,7 +103,13 @@ async function main(): Promise<void> {
       .getInput('args')
       .split(' ')
       .filter((arg) => arg.length > 0),
+    workingDirectory: core.getInput('workingDirectory'),
   };
+
+  if (inputs.workingDirectory && inputs.workingDirectory.length > 0) {
+    core.info(`🏃 Working in custom directory: ${inputs.workingDirectory}`);
+    process.chdir(inputs.workingDirectory);
+  }
 
   return core
     .group<CommandWrapper>('🔍 Ensuring Nx is available', locateNx)
