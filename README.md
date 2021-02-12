@@ -4,6 +4,12 @@
 
 ![License](https://img.shields.io/github/license/MansaGroup/nrwl-nx-action) ![GitHub Issues](https://img.shields.io/github/issues/mansagroup/nrwl-nx-action) ![GitHub Stars](https://img.shields.io/github/stars/MansaGroup/nrwl-nx-action)
 
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
+
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 The action wraps the usage of the [Nrwl Nx](https://nx.dev/) monorepo development toolkit.
 
 Nx manages multiple **projects** linked each other with a dependecy graph. One of its key
@@ -151,9 +157,16 @@ Nx workspace located in another folder than the repository root.
 
 This project is [MIT licensed](LICENSE.txt).
 
-## Authors
+## Contributors
 
-|                                                      Jérémy Levilain                                                       |
-| :------------------------------------------------------------------------------------------------------------------------: |
-| ![Jérémy Levilain](https://avatars2.githubusercontent.com/u/6763873?s=100&u=556a37811b42f5528fba0b224e321269c0d77c92&v=4)  |
-| [GitHub](https://github.com/iamblueslime) - [Website](https://jeremylvln.fr) - [Twitter](https://twitter.com/iamblueslime) |
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
