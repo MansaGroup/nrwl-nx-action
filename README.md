@@ -42,15 +42,16 @@ only on the affected projects. Nothing more. Simple. More examples below.
 
 This GitHub action can take several inputs to configure its behaviors:
 
-| Name        | Type                 | Default | Example            | Description                                                                        |
-| ----------- | -------------------- | ------- | ------------------ | ---------------------------------------------------------------------------------- |
-| targets     | Comma-separated list | ø       | `lint,test,build`  | List of targets to execute                                                         |
-| projects    | Comma-separated list | ø       | `frontend,backend` | List of projects to use (more below)                                               |
-| all         | Boolean              | `false` | `true`             | Run the targets on all the projects of the Nx workspace                            |
-| affected    | Boolean              | `true`  | `true`             | Run the targets on the affected projects since the last modifications (more below) |
-| parallel    | Boolean              | `false` | `true`             | Run the tasks in parallel (can be expensive)                                       |
-| maxParallel | Number               | `3`     | `3`                | Number of tasks to execute in parallel (can be expensive)                          |
-| args        | String               | ø       | `--key="value"`    | Optional args to append to the Nx commands                                         |
+| Name             | Type                 | Default | Example            | Description                                                                        |
+| ---------------- | -------------------- | ------- | ------------------ | ---------------------------------------------------------------------------------- |
+| targets          | Comma-separated list | ø       | `lint,test,build`  | List of targets to execute                                                         |
+| projects         | Comma-separated list | ø       | `frontend,backend` | List of projects to use (more below)                                               |
+| all              | Boolean              | `false` | `true`             | Run the targets on all the projects of the Nx workspace                            |
+| affected         | Boolean              | `true`  | `true`             | Run the targets on the affected projects since the last modifications (more below) |
+| parallel         | Boolean              | `false` | `true`             | Run the tasks in parallel (can be expensive)                                       |
+| maxParallel      | Number               | `3`     | `3`                | Number of tasks to execute in parallel (can be expensive)                          |
+| args             | String               | ø       | `--key="value"`    | Optional args to append to the Nx commands                                         |
+| workingDirectory | String               | ø       | `myNxFolder`       | Path to the Nx workspace, needed if not the repository root                        |
 
 **Note:** `all` and `affected` are mutually exclusive.
 
