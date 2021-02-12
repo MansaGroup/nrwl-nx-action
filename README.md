@@ -30,7 +30,7 @@ This behavior can be modified using the different inputs (see below).
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v1
+- uses: mansagroup/nrwl-nx-action@v2
   with:
     targets: lint,build,deploy
 ```
@@ -51,6 +51,7 @@ This GitHub action can take several inputs to configure its behaviors:
 | parallel         | Boolean              | `false` | `true`             | Run the tasks in parallel (can be expensive)                                       |
 | maxParallel      | Number               | `3`     | `3`                | Number of tasks to execute in parallel (can be expensive)                          |
 | args             | String               | ø       | `--key="value"`    | Optional args to append to the Nx commands                                         |
+| nxCloud          | Boolean              | `false` | `true`             | Enable support of Nx Cloud                                                         |
 | workingDirectory | String               | ø       | `myNxFolder`       | Path to the Nx workspace, needed if not the repository root                        |
 
 **Note:** `all` and `affected` are mutually exclusive.
@@ -80,7 +81,7 @@ This will run the `build` target on all the affected projects.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v1
+- uses: mansagroup/nrwl-nx-action@v2
   with:
     targets: build
     affected: 'true' # Defaults to true, therefore optional
@@ -95,7 +96,7 @@ projects of the workspace.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v1
+- uses: mansagroup/nrwl-nx-action@v2
   with:
     targets: lint,test,build
     all: 'true'
@@ -110,7 +111,7 @@ only.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v1
+- uses: mansagroup/nrwl-nx-action@v2
   with:
     targets: build
     projects: frontend,backend
@@ -125,7 +126,7 @@ in parallel.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v1
+- uses: mansagroup/nrwl-nx-action@v2
   with:
     targets: lint
     all: 'true'
@@ -141,10 +142,26 @@ Nx workspace located in another folder than the repository root.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v1
+- uses: mansagroup/nrwl-nx-action@v2
   with:
     targets: build
     workingDirectory: my-nx-subfolder
+```
+
+### Run one target with Nx Cloud enabled
+
+This will run the `build` target on all the affected projects with
+Nx Cloud enabled (by adding the `--scan` command option and both
+`NX_BRANCH` and `NX_RUN_GROUP` environment variables).
+
+> workflow.yml
+
+```yaml
+---
+- uses: mansagroup/nrwl-nx-action@v2
+  with:
+    targets: build
+    nxCloud: 'true'
 ```
 
 ## License

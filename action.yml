@@ -28,6 +28,10 @@ inputs:
     description: 'Optional arguments to append to the Nx command'
     required: false
     default: ''
+  nxCloud:
+    description: 'Enable support for Nx Cloud'
+    required: false
+    default: 'false'
   workingDirectory:
     description: 'Path to the Nx workspace, needed if not the repository root'
     required: false
