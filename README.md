@@ -132,6 +132,21 @@ in parallel.
     parallel: 'true'
 ```
 
+### Run one target on a Nx workspace located in another folder
+
+This will run the `build` target on all the affected projects of a
+Nx workspace located in another folder than the repository root.
+
+> workflow.yml
+
+```yaml
+---
+- uses: mansagroup/nrwl-nx-action@v1
+  with:
+    targets: build
+    workingDirectory: my-nx-subfolder
+```
+
 ## License
 
 This project is [MIT licensed](LICENSE.txt).
