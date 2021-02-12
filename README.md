@@ -2,13 +2,7 @@
 
 # Nrwl Nx Action
 
-![License](https://img.shields.io/github/license/MansaGroup/nrwl-nx-action) ![GitHub Issues](https://img.shields.io/github/issues/mansagroup/nrwl-nx-action) ![GitHub Stars](https://img.shields.io/github/stars/MansaGroup/nrwl-nx-action)
-
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
-
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+![License](https://img.shields.io/github/license/MansaGroup/nrwl-nx-action?style=flat-square) ![GitHub Issues](https://img.shields.io/github/issues/mansagroup/nrwl-nx-action?style=flat-square) ![GitHub Stars](https://img.shields.io/github/stars/MansaGroup/nrwl-nx-action?style=flat-square)
 
 The action wraps the usage of the [Nrwl Nx](https://nx.dev/) monorepo development toolkit.
 
