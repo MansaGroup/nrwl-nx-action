@@ -60,7 +60,7 @@
     "eslint-plugin-import-helpers": "1.1.0",
     "eslint-plugin-jest": "24.1.5",
     "eslint-plugin-prettier": "3.3.1",
-    "eslint-plugin-sonarjs": "0.5.0",
+    "eslint-plugin-sonarjs": "0.6.0",
     "eslint-plugin-unused-imports": "1.1.0",
     "husky": "5.0.9",
     "jest": "26.6.3",
