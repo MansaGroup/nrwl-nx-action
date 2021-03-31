@@ -1,28 +1,23 @@
 {
   "extends": ["config:base"],
-  "labels": ["type:dependencies :wrench:"],
+  "automerge": true,
   "enabledManagers": ["github-actions", "npm"],
-  "assigneesFromCodeOwners": true,
-  "assigneesSampleSize": 1,
-  "reviewersFromCodeOwners": true,
-  "reviewersSampleSize": 1,
-  "updateNotScheduled": false,
-  "stabilityDays": 3,
-  "prCreation": "not-pending",
-  "vulnerabilityAlerts": {
-    "labels": ["priority:critical :fire:"]
-  },
+  "labels": ["type:dependencies :wrench:"],
   "node": {
     "supportPolicy": ["lts_latest"]
   },
+  "prCreation": "not-pending",
+  "reviewersFromCodeOwners": true,
+  "reviewersSampleSize": 1,
+  "stabilityDays": 3,
+  "updateNotScheduled": false,
+  "vulnerabilityAlerts": {
+    "labels": ["priority:critical :fire:"]
+  },
   "packageRules": [
     {
-      "updateTypes": ["pin", "digest"],
-      "automerge": true
-    },
-    {
-      "depTypeList": ["devDependencies"],
-      "automerge": true
+      "matchDepTypes": ["devDependencies"],
+      "prPriority": -1
     }
   ]
 }
