@@ -7,8 +7,7 @@
     "supportPolicy": ["lts_latest"]
   },
   "prCreation": "not-pending",
-  "reviewersFromCodeOwners": true,
-  "reviewersSampleSize": 1,
+  "reviewersFromCodeOwners": false,
   "stabilityDays": 3,
   "updateNotScheduled": false,
   "vulnerabilityAlerts": {
