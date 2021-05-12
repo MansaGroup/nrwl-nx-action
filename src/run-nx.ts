@@ -1,7 +1,8 @@
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as github from '@actions/github';
-import { PullRequest } from '@octokit/webhooks-definitions/schema';
+// eslint-disable-next-line import/no-unresolved
+import { PullRequest } from '@octokit/webhooks-types';
 
 import { CommandWrapper } from './command-builder';
 import { Inputs } from './inputs';
