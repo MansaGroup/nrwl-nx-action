@@ -50,7 +50,7 @@
   "devDependencies": {
     "@commitlint/cli": "12.1.4",
     "@commitlint/config-conventional": "12.1.4",
-    "@octokit/webhooks": "9.6.2",
+    "@octokit/webhooks": "9.6.3",
     "@typescript-eslint/eslint-plugin": "4.25.0",
     "@typescript-eslint/parser": "4.25.0",
     "@vercel/ncc": "0.28.6",
