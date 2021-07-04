@@ -63,7 +63,7 @@
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-sonarjs": "0.7.0",
     "eslint-plugin-unused-imports": "1.1.1",
-    "husky": "5.0.9",
+    "husky": "7.0.0",
     "jest": "27.0.6",
     "jest-circus": "27.0.6",
     "lint-staged": "11.0.0",
