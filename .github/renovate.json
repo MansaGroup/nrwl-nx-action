@@ -1,6 +1,7 @@
 {
   "extends": ["config:base"],
   "automerge": true,
+  "dependencyDashboard": false,
   "enabledManagers": ["github-actions", "npm"],
   "labels": ["type:dependencies :wrench:"],
   "node": {
