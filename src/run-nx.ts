@@ -2,7 +2,7 @@ import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as github from '@actions/github';
 // eslint-disable-next-line import/no-unresolved
-import { PullRequest } from '@octokit/webhooks-types';
+import { PullRequest, PushEvent } from '@octokit/webhooks-types';
 
 import { CommandWrapper } from './command-builder';
 import { Inputs } from './inputs';
@@ -11,6 +11,9 @@ async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
   if (github.context.eventName === 'pull_request') {
     const prPayload = github.context.payload.pull_request as PullRequest;
     return [prPayload.base.sha, prPayload.head.sha];
+  } else if (github.context.eventName === 'push') {
+    const pushPayload = github.context.payload as PushEvent;
+    return [pushPayload.before, pushPayload.after];
   } else {
     let base = '';
     await exec.exec('git', ['rev-parse', 'HEAD~1'], {
