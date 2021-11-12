@@ -55,7 +55,7 @@
     "@typescript-eslint/parser": "4.33.0",
     "@vercel/ncc": "0.31.1",
     "eslint": "7.32.0",
-    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.25.2",
     "eslint-plugin-import-helpers": "1.1.0",
