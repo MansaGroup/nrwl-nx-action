@@ -7,7 +7,7 @@ import { PullRequest, PushEvent } from '@octokit/webhooks-types';
 import { CommandWrapper } from './command-builder';
 import { Inputs } from './inputs';
 
-async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
+async function retrieveGitBoundaries(inputs: Inputs): Promise<[base: string, head: string]> {
   if (github.context.eventName === 'pull_request') {
     const prPayload = github.context.payload.pull_request as PullRequest;
     return [prPayload.base.sha, prPayload.head.sha];
@@ -16,7 +16,7 @@ async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
     return [pushPayload.before, pushPayload.after];
   } else {
     let base = '';
-    await exec.exec('git', ['rev-parse', 'HEAD~1'], {
+    await exec.exec('git', ['rev-parse', inputs.affectedBaseRefNonPR], {
       listeners: {
         stdout: (data: Buffer) => (base += data.toString()),
       },
@@ -66,7 +66,7 @@ async function runNxAffected(
   const boundaries = await core.group(
     '🏷 Retrieving Git boundaries (affected command)',
     () =>
-      retrieveGitBoundaries().then((boundaries) => {
+      retrieveGitBoundaries(inputs).then((boundaries) => {
         core.info(`Base boundary: ${boundaries[0]}`);
         core.info(`Head boundary: ${boundaries[1]}`);
         return boundaries;

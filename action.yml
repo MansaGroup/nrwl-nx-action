@@ -35,6 +35,9 @@ inputs:
   workingDirectory:
     description: 'Path to the Nx workspace, needed if not the repository root'
     required: false
+  affectedBaseNonPR:
+    description: 'Parameter to use for nx affected base parameter for non pull request contexts'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
