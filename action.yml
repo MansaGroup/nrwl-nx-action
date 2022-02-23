@@ -38,6 +38,9 @@ inputs:
   affectedBaseNonPR:
     description: 'Parameter to use for nx affected base parameter for non pull request contexts'
     required: false
+  affectedHeadNonPR:
+    description: 'Parameter to use for nx affected head parameter for non pull request contexts'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'

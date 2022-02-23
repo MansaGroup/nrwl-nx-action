@@ -54,6 +54,7 @@ This GitHub action can take several inputs to configure its behaviors:
 | nxCloud          | Boolean              | `false` | `true`             | Enable support of Nx Cloud                                                         |
 | workingDirectory | String               | ø       | `myNxFolder`       | Path to the Nx workspace, needed if not the repository root                        |
 | affectedBaseNonPR | String               | HEAD~1       | `HEAD~1`       | Parameter to use for nx affected base parameter for non pull request contexts |
+| affectedHeadNonPR | String               | HEAD       | `HEAD`       | Parameter to use for nx affected head parameter for non pull request contexts |
 
 **Note:** `all` and `affected` are mutually exclusive.
 

@@ -9,4 +9,5 @@ export interface Inputs {
   nxCloud: boolean;
   workingDirectory: string;
   affectedBaseNonPR: string;
+  affectedHeadNonPR: string;
 }

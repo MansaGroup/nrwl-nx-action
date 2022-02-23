@@ -7,7 +7,9 @@ import { PullRequest, PushEvent } from '@octokit/webhooks-types';
 import { CommandWrapper } from './command-builder';
 import { Inputs } from './inputs';
 
-async function retrieveGitBoundaries(inputs: Inputs): Promise<[base: string, head: string]> {
+async function retrieveGitBoundaries(
+  inputs: Inputs,
+): Promise<[base: string, head: string]> {
   if (github.context.eventName === 'pull_request') {
     const prPayload = github.context.payload.pull_request as PullRequest;
     return [prPayload.base.sha, prPayload.head.sha];
@@ -16,14 +18,14 @@ async function retrieveGitBoundaries(inputs: Inputs): Promise<[base: string, hea
     return [pushPayload.before, pushPayload.after];
   } else {
     let base = '';
-    await exec.exec('git', ['rev-parse', inputs.affectedBaseRefNonPR], {
+    await exec.exec('git', ['rev-parse', inputs.affectedBaseNonPR], {
       listeners: {
         stdout: (data: Buffer) => (base += data.toString()),
       },
     });
 
     let head = '';
-    await exec.exec('git', ['rev-parse', 'HEAD'], {
+    await exec.exec('git', ['rev-parse', inputs.affectedHeadNonPR], {
       listeners: {
         stdout: (data: Buffer) => (head += data.toString()),
       },

@@ -28,7 +28,8 @@ async function main(): Promise<void> {
       .filter((arg) => arg.length > 0),
     nxCloud: core.getInput('nxCloud') === 'true',
     workingDirectory: core.getInput('workingDirectory'),
-    affectedBaseNonPR: core.getInput('affectedBaseNonPR') || 'HEAD~1'
+    affectedBaseNonPR: core.getInput('affectedBaseNonPR') || 'HEAD~1',
+    affectedHeadNonPR: core.getInput('affectedHeadNonPR') || 'HEAD',
   };
 
   if (inputs.workingDirectory && inputs.workingDirectory.length > 0) {
