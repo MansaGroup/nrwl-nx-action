@@ -15,17 +15,20 @@ async function retrieveGitBoundaries(
     return [prPayload.base.sha, prPayload.head.sha];
   } else if (github.context.eventName === 'push') {
     const pushPayload = github.context.payload as PushEvent;
-    return [pushPayload.before, pushPayload.after];
+    return [
+      inputs.affectedPushBaseBoundaryOverride || pushPayload.before,
+      inputs.affectedPushHeadBoundaryOverride || pushPayload.after,
+    ];
   } else {
     let base = '';
-    await exec.exec('git', ['rev-parse', inputs.affectedBaseNonPR], {
+    await exec.exec('git', ['rev-parse', 'HEAD~1'], {
       listeners: {
         stdout: (data: Buffer) => (base += data.toString()),
       },
     });
 
     let head = '';
-    await exec.exec('git', ['rev-parse', inputs.affectedHeadNonPR], {
+    await exec.exec('git', ['rev-parse', 'HEAD'], {
       listeners: {
         stdout: (data: Buffer) => (head += data.toString()),
       },

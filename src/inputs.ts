@@ -8,6 +8,6 @@ export interface Inputs {
   args: string[];
   nxCloud: boolean;
   workingDirectory: string;
-  affectedBaseNonPR: string;
-  affectedHeadNonPR: string;
+  affectedPushBaseBoundaryOverride: string;
+  affectedPushHeadBoundaryOverride: string;
 }
