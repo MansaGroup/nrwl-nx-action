@@ -1,4 +1,4 @@
-name: 'Nrwl Nx - dkhunt27'
+name: 'Nrwl Nx'
 author: 'Mansa Group'
 description: 'Wrap the Nx monorepo tool and execute tasks depending on the action context'
 inputs:
