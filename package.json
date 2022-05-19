@@ -48,8 +48,8 @@
   },
   "homepage": "https://github.com/MansaGroup/nrwl-nx-action#readme",
   "devDependencies": {
-    "@commitlint/cli": "16.3.0",
-    "@commitlint/config-conventional": "16.2.4",
+    "@commitlint/cli": "17.0.0",
+    "@commitlint/config-conventional": "17.0.0",
     "@octokit/webhooks": "9.24.0",
     "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.33.0",
