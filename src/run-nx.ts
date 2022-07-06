@@ -98,7 +98,7 @@ export async function runNx(inputs: Inputs, nx: CommandWrapper): Promise<void> {
   }
 
   if (inputs.parallel) {
-    args.push('--parallel', `--maxParallel=${inputs.maxParallel}`);
+    args.push(`--parallel=${inputs.parallel}`);
   }
 
   if (inputs.all === true || inputs.affected === false) {

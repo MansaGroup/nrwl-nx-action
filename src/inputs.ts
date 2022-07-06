@@ -3,8 +3,7 @@ export interface Inputs {
   projects: string[];
   all: boolean;
   affected: boolean;
-  parallel: boolean;
-  maxParallel: number;
+  parallel: number;
   args: string[];
   nxCloud: boolean;
   workingDirectory: string;

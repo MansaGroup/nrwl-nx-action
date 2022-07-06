@@ -17,11 +17,10 @@ async function main(): Promise<void> {
       .filter((project) => project.length > 0),
     all: core.getInput('all') === 'true',
     affected: core.getInput('affected') === 'true',
-    parallel: core.getInput('parallel') === 'true',
-    maxParallel:
-      parseInt(core.getInput('maxParallel')) === NaN
+    parallel:
+      parseInt(core.getInput('parallel')) === NaN
         ? 3
-        : parseInt(core.getInput('maxParallel')),
+        : parseInt(core.getInput('parallel')),
     args: core
       .getInput('args')
       .split(' ')

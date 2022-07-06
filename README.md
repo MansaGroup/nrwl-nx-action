@@ -48,8 +48,7 @@ This GitHub action can take several inputs to configure its behaviors:
 | projects         | Comma-separated list | ø       | `frontend,backend` | List of projects to use (more below)                                               |
 | all              | Boolean              | `false` | `true`             | Run the targets on all the projects of the Nx workspace                            |
 | affected         | Boolean              | `true`  | `true`             | Run the targets on the affected projects since the last modifications (more below) |
-| parallel         | Boolean              | `false` | `true`             | Run the tasks in parallel (can be expensive)                                       |
-| maxParallel      | Number               | `3`     | `3`                | Number of tasks to execute in parallel (can be expensive)                          |
+| parallel         | Number               | `3`     | `3`                | Number of tasks to execute in parallel (can be expensive)                          |
 | args             | String               | ø       | `--key="value"`    | Optional args to append to the Nx commands                                         |
 | nxCloud          | Boolean              | `false` | `true`             | Enable support of Nx Cloud                                                         |
 | workingDirectory | String               | ø       | `myNxFolder`       | Path to the Nx workspace, needed if not the repository root                        |
@@ -117,10 +116,10 @@ only.
     projects: frontend,backend
 ```
 
-### Run one target on all the projects in parallel
+### Run one target on all the projects not in parallel
 
-This will run the `lint` target on all the projects of the workspace
-in parallel.
+By default, nx will run tasks in parallel (with a default value of 3).
+This will run the `lint` target on all the projects of the workspace without parallelization.
 
 > workflow.yml
 
@@ -130,7 +129,7 @@ in parallel.
   with:
     targets: lint
     all: 'true'
-    parallel: 'true'
+    parallel: 1
 ```
 
 ### Run one target on a Nx workspace located in another folder
