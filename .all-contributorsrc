@@ -9,6 +9,16 @@
   "imageSize": 100,
   "commit": true,
   "commitConvention": "angular",
-  "contributors": [],
+  "contributors": [
+    {
+      "login": "tc-developer01",
+      "name": "tc-developer01",
+      "avatar_url": "https://avatars.githubusercontent.com/u/89852602?v=4",
+      "profile": "https://github.com/tc-developer01",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
   "contributorsPerLine": 7
 }
