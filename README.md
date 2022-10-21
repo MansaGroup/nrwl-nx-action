@@ -30,6 +30,11 @@ This behavior can be modified using the different inputs (see below).
 
 ```yaml
 ---
+- name: Checkout
+  uses: actions/checkout@v3
+  with:
+    fetch-depth: 0
+
 - uses: mansagroup/nrwl-nx-action@v2
   with:
     targets: lint,build,deploy
@@ -37,6 +42,12 @@ This behavior can be modified using the different inputs (see below).
 
 This simple step will run three targets: `lint`, `build` and `deploy`, sequentially
 only on the affected projects. Nothing more. Simple. More examples below.
+
+> Note:
+> By default, the checkout action will only clone the latest commit of the branch,
+> which will cause issues as Nx needs to compute the difference between the `base`
+> and `head`. Using the `fetch-depth: 0` parameter will clone the entire
+> repository, which is not optimal but functional.
 
 ## Inputs
 
