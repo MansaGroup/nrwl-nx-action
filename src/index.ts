@@ -1,8 +1,7 @@
 import * as core from '@actions/core';
 
-import { CommandWrapper } from './command-builder';
+import { CommandBuilder } from './command-builder';
 import { Inputs } from './inputs';
-import { locateNx } from './locate-nx';
 import { runNx } from './run-nx';
 
 async function main(): Promise<void> {
@@ -17,11 +16,10 @@ async function main(): Promise<void> {
       .filter((project) => project.length > 0),
     all: core.getInput('all') === 'true',
     affected: core.getInput('affected') === 'true',
-    parallel: core.getInput('parallel') === 'true',
-    maxParallel:
-      parseInt(core.getInput('maxParallel')) === NaN
+    parallel:
+      parseInt(core.getInput('parallel')) === NaN
         ? 3
-        : parseInt(core.getInput('maxParallel')),
+        : parseInt(core.getInput('parallel')),
     args: core
       .getInput('args')
       .split(' ')
@@ -35,12 +33,14 @@ async function main(): Promise<void> {
     process.chdir(inputs.workingDirectory);
   }
 
-  return core
-    .group<CommandWrapper>('🔍 Ensuring Nx is available', locateNx)
-    .then((nx) => runNx(inputs, nx))
-    .catch((err) => {
-      core.setFailed(err);
-    });
+  const commandWrapper = new CommandBuilder()
+    .withCommand('npx')
+    .withArgs('nx')
+    .build();
+
+  return runNx(inputs, commandWrapper).catch((err: Error) => {
+    core.setFailed(err);
+  });
 }
 
 void main();

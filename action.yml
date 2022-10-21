@@ -17,10 +17,6 @@ inputs:
     required: false
     default: 'true'
   parallel:
-    description: 'Run the tasks in parallel (can be expensive)'
-    required: false
-    default: 'false'
-  maxParallel:
     description: 'Number of tasks to execute in parallel (can be expensive)'
     required: false
     default: '3'
