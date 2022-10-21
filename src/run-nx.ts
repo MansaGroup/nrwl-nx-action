@@ -1,11 +1,10 @@
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as github from '@actions/github';
-// eslint-disable-next-line import/no-unresolved
-import { PullRequest, PushEvent } from '@octokit/webhooks-types';
+import type { PullRequest, PushEvent } from '@octokit/webhooks-types';
 
-import { CommandWrapper } from './command-builder';
-import { Inputs } from './inputs';
+import type { CommandWrapper } from './command-builder';
+import type { Inputs } from './inputs';
 
 async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
   if (github.context.eventName === 'pull_request') {
@@ -89,11 +88,11 @@ export async function runNx(inputs: Inputs, nx: CommandWrapper): Promise<void> {
 
   if (inputs.nxCloud) {
     args.push('--scan');
-    process.env.NX_RUN_GROUP = github.context.runId.toString();
+    process.env['NX_RUN_GROUP'] = github.context.runId.toString();
 
     if (github.context.eventName === 'pull_request') {
       const prPayload = github.context.payload.pull_request as PullRequest;
-      process.env.NX_BRANCH = prPayload.number.toString();
+      process.env['NX_BRANCH'] = prPayload.number.toString();
     }
   }
 

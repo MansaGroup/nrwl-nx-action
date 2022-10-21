@@ -32,7 +32,7 @@ inputs:
     description: 'Path to the Nx workspace, needed if not the repository root'
     required: false
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
 branding:
   icon: 'terminal'

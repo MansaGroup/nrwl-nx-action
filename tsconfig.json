@@ -1,12 +1,10 @@
 {
+  "extends": "@tsconfig/node16-strictest/tsconfig.json",
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
+    "removeComments": true,
     "outDir": "./lib",
-    "rootDir": "./src",
-    "strict": true,
-    "noImplicitAny": true,
-    "esModuleInterop": true
+    "rootDir": "./src"
   },
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["dist", "lib"]
 }

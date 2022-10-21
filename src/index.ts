@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 
 import { CommandBuilder } from './command-builder';
-import { Inputs } from './inputs';
+import type { Inputs } from './inputs';
 import { runNx } from './run-nx';
 
 const ARGS_REGEX = /\w+|"(?:\\"|[^"])+"/g;
