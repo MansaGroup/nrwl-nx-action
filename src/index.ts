@@ -4,6 +4,15 @@ import { CommandBuilder } from './command-builder';
 import { Inputs } from './inputs';
 import { runNx } from './run-nx';
 
+const ARGS_REGEX = /\w+|"(?:\\"|[^"])+"/g;
+
+function parseArgs(raw: string): string[] {
+  const parts = ARGS_REGEX.exec(raw);
+
+  if (!parts) return [];
+  return parts.filter((part) => part.length > 0);
+}
+
 async function main(): Promise<void> {
   const inputs: Inputs = {
     targets: core
@@ -20,10 +29,7 @@ async function main(): Promise<void> {
       parseInt(core.getInput('parallel')) === NaN
         ? 3
         : parseInt(core.getInput('parallel')),
-    args: core
-      .getInput('args')
-      .split(' ')
-      .filter((arg) => arg.length > 0),
+    args: parseArgs(core.getInput('args')),
     nxCloud: core.getInput('nxCloud') === 'true',
     workingDirectory: core.getInput('workingDirectory'),
   };
