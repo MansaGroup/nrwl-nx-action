@@ -87,7 +87,6 @@ export async function runNx(inputs: Inputs, nx: CommandWrapper): Promise<void> {
   const args = inputs.args;
 
   if (inputs.nxCloud) {
-    args.push('--scan');
     process.env['NX_RUN_GROUP'] = github.context.runId.toString();
 
     if (github.context.eventName === 'pull_request') {
