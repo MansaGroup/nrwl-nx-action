@@ -53,8 +53,8 @@ This GitHub action can take several inputs to configure its behaviors:
 | args             | String               | ø       | `--key="value"`    | Optional args to append to the Nx commands                                         |
 | nxCloud          | Boolean              | `false` | `true`             | Enable support of Nx Cloud                                                         |
 | workingDirectory | String               | ø       | `myNxFolder`       | Path to the Nx workspace, needed if not the repository root                        |
-| affectedPushBaseBoundaryOverride | String               |        |       | Parameter to use for overriding nx affected base commit for push contexts |
-| affectedPushHeadBoundaryOverride | String               |        |        | Parameter to use for overriding nx affected head commit for push contexts |
+| baseBoundaryOverride | String               |        |       | Parameter to use for overriding nx base commit |
+| headBoundaryOverride | String               |        |        | Parameter to use for overriding nx head commit |
 
 **Note:** `all` and `affected` are mutually exclusive.
 
@@ -70,7 +70,7 @@ of the workflow:
 - Inside a **pull request** context, the action will use the base and head Git
   references
 - Otherwise, will compute the difference between the `HEAD` and the last
-  commit
+  commit; unless base/head overrides provided
 
 ## Examples
 

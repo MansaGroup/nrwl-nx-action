@@ -16,23 +16,31 @@ async function retrieveGitBoundaries(
   } else if (github.context.eventName === 'push') {
     const pushPayload = github.context.payload as PushEvent;
     return [
-      inputs.affectedPushBaseBoundaryOverride || pushPayload.before,
-      inputs.affectedPushHeadBoundaryOverride || pushPayload.after,
+      inputs.baseBoundaryOverride || pushPayload.before,
+      inputs.headBoundaryOverride || pushPayload.after,
     ];
   } else {
     let base = '';
-    await exec.exec('git', ['rev-parse', 'HEAD~1'], {
-      listeners: {
-        stdout: (data: Buffer) => (base += data.toString()),
-      },
-    });
+    if (inputs.baseBoundaryOverride) {
+      base = inputs.baseBoundaryOverride;
+    } else {
+      await exec.exec('git', ['rev-parse', 'HEAD~1'], {
+        listeners: {
+          stdout: (data: Buffer) => (base += data.toString()),
+        },
+      });
+    }
 
     let head = '';
-    await exec.exec('git', ['rev-parse', 'HEAD'], {
-      listeners: {
-        stdout: (data: Buffer) => (head += data.toString()),
-      },
-    });
+    if (inputs.headBoundaryOverride) {
+      head = inputs.headBoundaryOverride;
+    } else {
+      await exec.exec('git', ['rev-parse', 'HEAD'], {
+        listeners: {
+          stdout: (data: Buffer) => (head += data.toString()),
+        },
+      });
+    }
 
     return [
       base.replace(/(\r\n|\n|\r)/gm, ''),

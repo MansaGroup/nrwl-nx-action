@@ -28,12 +28,8 @@ async function main(): Promise<void> {
       .filter((arg) => arg.length > 0),
     nxCloud: core.getInput('nxCloud') === 'true',
     workingDirectory: core.getInput('workingDirectory'),
-    affectedPushBaseBoundaryOverride: core.getInput(
-      'affectedPushBaseBoundaryOverride',
-    ),
-    affectedPushHeadBoundaryOverride: core.getInput(
-      'affectedPushHeadBoundaryOverride',
-    ),
+    baseBoundaryOverride: core.getInput('baseBoundaryOverride'),
+    headBoundaryOverride: core.getInput('headBoundaryOverride'),
   };
 
   if (inputs.workingDirectory && inputs.workingDirectory.length > 0) {

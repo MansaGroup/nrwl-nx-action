@@ -35,11 +35,11 @@ inputs:
   workingDirectory:
     description: 'Path to the Nx workspace, needed if not the repository root'
     required: false
-  affectedPushBaseBoundaryOverride:
-    description: 'Parameter to use for overriding nx affected base commit for push contexts'
+  baseBoundaryOverride:
+    description: 'Parameter to use for overriding nx base commit'
     required: false
-  affectedPushHeadBoundaryOverride:
-    description: 'Parameter to use for overriding nx affected head commit for push contexts'
+  headBoundaryOverride:
+    description: 'Parameter to use for overriding nx head commit'
     required: false
 runs:
   using: 'node12'
