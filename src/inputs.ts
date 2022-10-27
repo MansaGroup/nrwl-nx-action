@@ -9,6 +9,8 @@ export type Inputs = {
   args: string[];
   nxCloud: boolean;
   workingDirectory: string;
+  baseBoundaryOverride: string;
+  headBoundaryOverride: string;
 };
 
 const ARGS_REGEX = /\w+|"(?:\\"|[^"])+"/g;
@@ -39,5 +41,7 @@ export function parseInputs(): Inputs {
     args: parseArgs(core.getInput('args')),
     nxCloud: core.getInput('nxCloud') === 'true',
     workingDirectory: core.getInput('workingDirectory'),
+    baseBoundaryOverride: core.getInput('baseBoundaryOverride'),
+    headBoundaryOverride: core.getInput('headBoundaryOverride'),
   };
 }

@@ -6,27 +6,40 @@ import type { PullRequest, PushEvent } from '@octokit/webhooks-types';
 import type { CommandWrapper } from './command-builder';
 import type { Inputs } from './inputs';
 
-async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
+async function retrieveGitBoundaries(
+  inputs: Inputs,
+): Promise<[base: string, head: string]> {
   if (github.context.eventName === 'pull_request') {
     const prPayload = github.context.payload.pull_request as PullRequest;
     return [prPayload.base.sha, prPayload.head.sha];
   } else if (github.context.eventName === 'push') {
     const pushPayload = github.context.payload as PushEvent;
-    return [pushPayload.before, pushPayload.after];
+    return [
+      inputs.baseBoundaryOverride || pushPayload.before,
+      inputs.headBoundaryOverride || pushPayload.after,
+    ];
   } else {
     let base = '';
-    await exec.exec('git', ['rev-parse', 'HEAD~1'], {
-      listeners: {
-        stdout: (data: Buffer) => (base += data.toString()),
-      },
-    });
+    if (inputs.baseBoundaryOverride) {
+      base = inputs.baseBoundaryOverride;
+    } else {
+      await exec.exec('git', ['rev-parse', 'HEAD~1'], {
+        listeners: {
+          stdout: (data: Buffer) => (base += data.toString()),
+        },
+      });
+    }
 
     let head = '';
-    await exec.exec('git', ['rev-parse', 'HEAD'], {
-      listeners: {
-        stdout: (data: Buffer) => (head += data.toString()),
-      },
-    });
+    if (inputs.headBoundaryOverride) {
+      head = inputs.headBoundaryOverride;
+    } else {
+      await exec.exec('git', ['rev-parse', 'HEAD'], {
+        listeners: {
+          stdout: (data: Buffer) => (head += data.toString()),
+        },
+      });
+    }
 
     return [
       base.replace(/(\r\n|\n|\r)/gm, ''),
@@ -65,7 +78,7 @@ async function runNxAffected(
   const boundaries = await core.group(
     '🏷 Retrieving Git boundaries (affected command)',
     () =>
-      retrieveGitBoundaries().then((boundaries) => {
+      retrieveGitBoundaries(inputs).then((boundaries) => {
         core.info(`Base boundary: ${boundaries[0]}`);
         core.info(`Head boundary: ${boundaries[1]}`);
         return boundaries;
