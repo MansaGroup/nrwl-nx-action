@@ -35,7 +35,7 @@ This behavior can be modified using the different inputs (see below).
   with:
     fetch-depth: 0
 
-- uses: mansagroup/nrwl-nx-action@v2
+- uses: mansagroup/nrwl-nx-action@v3
   with:
     targets: lint,build,deploy
 ```
@@ -53,16 +53,18 @@ only on the affected projects. Nothing more. Simple. More examples below.
 
 This GitHub action can take several inputs to configure its behaviors:
 
-| Name             | Type                 | Default | Example            | Description                                                                        |
-| ---------------- | -------------------- | ------- | ------------------ | ---------------------------------------------------------------------------------- |
-| targets          | Comma-separated list | ø       | `lint,test,build`  | List of targets to execute                                                         |
-| projects         | Comma-separated list | ø       | `frontend,backend` | List of projects to use (more below)                                               |
-| all              | Boolean              | `false` | `true`             | Run the targets on all the projects of the Nx workspace                            |
-| affected         | Boolean              | `true`  | `true`             | Run the targets on the affected projects since the last modifications (more below) |
-| parallel         | Number               | `3`     | `3`                | Number of tasks to execute in parallel (can be expensive)                          |
-| args             | String               | ø       | `--key="value"`    | Optional args to append to the Nx commands                                         |
-| nxCloud          | Boolean              | `false` | `true`             | Enable support of Nx Cloud                                                         |
-| workingDirectory | String               | ø       | `myNxFolder`       | Path to the Nx workspace, needed if not the repository root                        |
+| Name                 | Type                 | Default | Example            | Description                                                                        |
+| -------------------- | -------------------- | ------- | ------------------ | ---------------------------------------------------------------------------------- |
+| targets              | Comma-separated list | ø       | `lint,test,build`  | List of targets to execute                                                         |
+| projects             | Comma-separated list | ø       | `frontend,backend` | List of projects to use (more below)                                               |
+| all                  | Boolean              | `false` | `true`             | Run the targets on all the projects of the Nx workspace                            |
+| affected             | Boolean              | `true`  | `true`             | Run the targets on the affected projects since the last modifications (more below) |
+| parallel             | Number               | `3`     | `3`                | Number of tasks to execute in parallel (can be expensive)                          |
+| args                 | String               | ø       | `--key="value"`    | Optional args to append to the Nx commands                                         |
+| nxCloud              | Boolean              | `false` | `true`             | Enable support of Nx Cloud                                                         |
+| workingDirectory     | String               | ø       | `myNxFolder`       | Path to the Nx workspace, needed if not the repository root                        |
+| baseBoundaryOverride | String               |         |                    | Parameter to use for overriding nx base commit                                     |
+| headBoundaryOverride | String               |         |                    | Parameter to use for overriding nx head commit                                     |
 
 **Note:** `all` and `affected` are mutually exclusive.
 
@@ -78,7 +80,7 @@ of the workflow:
 - Inside a **pull request** context, the action will use the base and head Git
   references
 - Otherwise, will compute the difference between the `HEAD` and the last
-  commit
+  commit; unless base/head overrides provided
 
 ## Examples
 
@@ -91,7 +93,7 @@ This will run the `build` target on all the affected projects.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v2
+- uses: mansagroup/nrwl-nx-action@v3
   with:
     targets: build
     affected: 'true' # Defaults to true, therefore optional
@@ -106,7 +108,7 @@ projects of the workspace.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v2
+- uses: mansagroup/nrwl-nx-action@v3
   with:
     targets: lint,test,build
     all: 'true'
@@ -121,7 +123,7 @@ only.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v2
+- uses: mansagroup/nrwl-nx-action@v3
   with:
     targets: build
     projects: frontend,backend
@@ -136,7 +138,7 @@ sequentially.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v2
+- uses: mansagroup/nrwl-nx-action@v3
   with:
     targets: lint
     all: 'true'
@@ -152,7 +154,7 @@ Nx workspace located in another folder than the repository root.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v2
+- uses: mansagroup/nrwl-nx-action@v3
   with:
     targets: build
     workingDirectory: my-nx-subfolder
@@ -168,7 +170,7 @@ Nx Cloud enabled (by adding the `--scan` command option and both
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v2
+- uses: mansagroup/nrwl-nx-action@v3
   with:
     targets: build
     nxCloud: 'true'
