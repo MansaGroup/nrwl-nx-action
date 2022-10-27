@@ -17,10 +17,6 @@ inputs:
     required: false
     default: 'true'
   parallel:
-    description: 'Run the tasks in parallel (can be expensive)'
-    required: false
-    default: 'false'
-  maxParallel:
     description: 'Number of tasks to execute in parallel (can be expensive)'
     required: false
     default: '3'
@@ -36,7 +32,7 @@ inputs:
     description: 'Path to the Nx workspace, needed if not the repository root'
     required: false
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
 branding:
   icon: 'terminal'
