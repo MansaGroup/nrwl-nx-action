@@ -35,7 +35,7 @@ This behavior can be modified using the different inputs (see below).
   with:
     fetch-depth: 0
 
-- uses: mansagroup/nrwl-nx-action@v2
+- uses: mansagroup/nrwl-nx-action@v3
   with:
     targets: lint,build,deploy
 ```
@@ -91,7 +91,7 @@ This will run the `build` target on all the affected projects.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v2
+- uses: mansagroup/nrwl-nx-action@v3
   with:
     targets: build
     affected: 'true' # Defaults to true, therefore optional
@@ -106,7 +106,7 @@ projects of the workspace.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v2
+- uses: mansagroup/nrwl-nx-action@v3
   with:
     targets: lint,test,build
     all: 'true'
@@ -121,7 +121,7 @@ only.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v2
+- uses: mansagroup/nrwl-nx-action@v3
   with:
     targets: build
     projects: frontend,backend
@@ -136,7 +136,7 @@ sequentially.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v2
+- uses: mansagroup/nrwl-nx-action@v3
   with:
     targets: lint
     all: 'true'
@@ -152,7 +152,7 @@ Nx workspace located in another folder than the repository root.
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v2
+- uses: mansagroup/nrwl-nx-action@v3
   with:
     targets: build
     workingDirectory: my-nx-subfolder
@@ -168,7 +168,7 @@ Nx Cloud enabled (by adding the `--scan` command option and both
 
 ```yaml
 ---
-- uses: mansagroup/nrwl-nx-action@v2
+- uses: mansagroup/nrwl-nx-action@v3
   with:
     targets: build
     nxCloud: 'true'
