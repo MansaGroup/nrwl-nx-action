@@ -3,7 +3,6 @@ import * as exec from '@actions/exec';
 import * as github from '@actions/github';
 import type { PullRequest, PushEvent } from '@octokit/webhooks-types';
 
-import type { CommandWrapper } from './command-builder';
 import type { Inputs } from './inputs';
 
 async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
@@ -35,56 +34,60 @@ async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
   }
 }
 
-async function runNxAll(
-  inputs: Inputs,
-  nx: CommandWrapper,
-  args: string[],
-): Promise<void> {
-  for (const target of inputs.targets) {
-    await nx(['run-many', `--target=${target}`, '--all', ...args]);
-  }
+async function nx(args: string[]): Promise<void> {
+  await exec.exec(`npx nx ${args.join(' ')}`);
 }
 
-async function runNxProjects(
-  inputs: Inputs,
-  nx: CommandWrapper,
-  args: string[],
-): Promise<void> {
-  for (const project of inputs.projects) {
-    for (const target of inputs.targets) {
-      await nx([target, project, ...args]);
-    }
-  }
+async function runNxAll(inputs: Inputs, args: string[]): Promise<void> {
+  return inputs.targets.reduce(
+    (lastPromise, target) =>
+      lastPromise.then(() =>
+        nx(['run-many', `--target=${target}`, '--all', ...args]),
+      ),
+    Promise.resolve(),
+  );
 }
 
-async function runNxAffected(
-  inputs: Inputs,
-  nx: CommandWrapper,
-  args: string[],
-): Promise<void> {
-  const boundaries = await core.group(
+async function runNxProjects(inputs: Inputs, args: string[]): Promise<void> {
+  return inputs.projects
+    .flatMap((project) =>
+      inputs.targets.map((target): [string, string] => [project, target]),
+    )
+    .reduce(
+      (lastPromise, [project, target]) =>
+        lastPromise.then(() => nx([target, project, ...args])),
+      Promise.resolve(),
+    );
+}
+
+async function runNxAffected(inputs: Inputs, args: string[]): Promise<void> {
+  const [base, head] = await core.group(
     '🏷 Retrieving Git boundaries (affected command)',
     () =>
-      retrieveGitBoundaries().then((boundaries) => {
-        core.info(`Base boundary: ${boundaries[0]}`);
-        core.info(`Head boundary: ${boundaries[1]}`);
-        return boundaries;
+      retrieveGitBoundaries().then(([base, head]) => {
+        core.info(`Base boundary: ${base}`);
+        core.info(`Head boundary: ${head}`);
+        return [base, head];
       }),
   );
 
-  for (const target of inputs.targets) {
-    await nx([
-      'affected',
-      `--target=${target}`,
-      `--base=${boundaries[0]}`,
-      `--head=${boundaries[1]}`,
-      ...args,
-    ]);
-  }
+  return inputs.targets.reduce(
+    (lastPromise, target) =>
+      lastPromise.then(() =>
+        nx([
+          'affected',
+          `--target=${target}`,
+          `--base=${base}`,
+          `--head=${head}`,
+          ...args,
+        ]),
+      ),
+    Promise.resolve(),
+  );
 }
 
-export async function runNx(inputs: Inputs, nx: CommandWrapper): Promise<void> {
-  const args = inputs.args;
+export async function runNx(inputs: Inputs): Promise<void> {
+  const args: string[] = [inputs.args];
 
   if (inputs.nxCloud) {
     process.env['NX_RUN_GROUP'] = github.context.runId.toString();
@@ -100,10 +103,10 @@ export async function runNx(inputs: Inputs, nx: CommandWrapper): Promise<void> {
   }
 
   if (inputs.all === true || inputs.affected === false) {
-    return runNxAll(inputs, nx, args);
+    return runNxAll(inputs, args);
   } else if (inputs.projects.length > 0) {
-    return runNxProjects(inputs, nx, args);
+    return runNxProjects(inputs, args);
   } else {
-    return runNxAffected(inputs, nx, args);
+    return runNxAffected(inputs, args);
   }
 }

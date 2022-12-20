@@ -1,6 +1,5 @@
 import * as core from '@actions/core';
 
-import { CommandBuilder } from './command-builder';
 import { parseInputs } from './inputs';
 import { runNx } from './run-nx';
 
@@ -12,12 +11,7 @@ async function main(): Promise<void> {
     process.chdir(inputs.workingDirectory);
   }
 
-  const commandWrapper = new CommandBuilder()
-    .withCommand('npx')
-    .withArgs('nx')
-    .build();
-
-  return runNx(inputs, commandWrapper).catch((err: Error) => {
+  return runNx(inputs).catch((err: Error) => {
     core.setFailed(err);
   });
 }
