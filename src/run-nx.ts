@@ -34,11 +34,14 @@ async function retrieveGitBoundaries(): Promise<[base: string, head: string]> {
   }
 }
 
-async function nx(args: string[]): Promise<void> {
+async function nx(args: readonly string[]): Promise<void> {
   await exec.exec(`npx nx ${args.join(' ')}`);
 }
 
-async function runNxAll(inputs: Inputs, args: string[]): Promise<void> {
+async function runNxAll(
+  inputs: Inputs,
+  args: readonly string[],
+): Promise<void> {
   return inputs.targets.reduce(
     (lastPromise, target) =>
       lastPromise.then(() =>
@@ -48,7 +51,10 @@ async function runNxAll(inputs: Inputs, args: string[]): Promise<void> {
   );
 }
 
-async function runNxProjects(inputs: Inputs, args: string[]): Promise<void> {
+async function runNxProjects(
+  inputs: Inputs,
+  args: readonly string[],
+): Promise<void> {
   return inputs.projects
     .flatMap((project) =>
       inputs.targets.map((target): [string, string] => [project, target]),
@@ -60,7 +66,10 @@ async function runNxProjects(inputs: Inputs, args: string[]): Promise<void> {
     );
 }
 
-async function runNxAffected(inputs: Inputs, args: string[]): Promise<void> {
+async function runNxAffected(
+  inputs: Inputs,
+  args: readonly string[],
+): Promise<void> {
   const [base, head] = await core.group(
     '🏷 Retrieving Git boundaries (affected command)',
     () =>
@@ -87,8 +96,6 @@ async function runNxAffected(inputs: Inputs, args: string[]): Promise<void> {
 }
 
 export async function runNx(inputs: Inputs): Promise<void> {
-  const args: string[] = [inputs.args];
-
   if (inputs.nxCloud) {
     process.env['NX_RUN_GROUP'] = github.context.runId.toString();
 
@@ -98,9 +105,16 @@ export async function runNx(inputs: Inputs): Promise<void> {
     }
   }
 
+  const nxArgs: string[] = [];
+
   if (inputs.parallel) {
-    args.push(`--parallel=${inputs.parallel}`);
+    nxArgs.push(`--parallel=${inputs.parallel}`);
   }
+
+  const args =
+    inputs.args.length > 0
+      ? ([...nxArgs, '--', inputs.args] as const)
+      : ([...nxArgs] as const);
 
   if (inputs.all === true || inputs.affected === false) {
     return runNxAll(inputs, args);

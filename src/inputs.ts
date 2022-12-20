@@ -1,14 +1,14 @@
 import * as core from '@actions/core';
 
 export type Inputs = {
-  targets: string[];
-  projects: string[];
-  all: boolean;
-  affected: boolean;
-  parallel: number;
-  args: string;
-  nxCloud: boolean;
-  workingDirectory: string;
+  readonly targets: readonly string[];
+  readonly projects: readonly string[];
+  readonly all: boolean;
+  readonly affected: boolean;
+  readonly parallel: number;
+  readonly args: string;
+  readonly nxCloud: boolean;
+  readonly workingDirectory: string;
 };
 
 export function parseInputs(): Inputs {
