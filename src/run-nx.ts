@@ -116,10 +116,10 @@ export async function runNx(inputs: Inputs): Promise<void> {
       ? ([...nxArgs, '--', inputs.args] as const)
       : ([...nxArgs] as const);
 
-  if (inputs.all === true || inputs.affected === false) {
-    return runNxAll(inputs, args);
-  } else if (inputs.projects.length > 0) {
+  if (inputs.projects.length > 0) {
     return runNxProjects(inputs, args);
+  } else if (inputs.all === true || inputs.affected === false) {
+    return runNxAll(inputs, args);
   } else {
     return runNxAffected(inputs, args);
   }
