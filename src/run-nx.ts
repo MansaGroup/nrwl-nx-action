@@ -55,15 +55,18 @@ async function runNxProjects(
   inputs: Inputs,
   args: readonly string[],
 ): Promise<void> {
-  return inputs.projects
-    .flatMap((project) =>
-      inputs.targets.map((target): [string, string] => [project, target]),
-    )
-    .reduce(
-      (lastPromise, [project, target]) =>
-        lastPromise.then(() => nx([target, project, ...args])),
-      Promise.resolve(),
-    );
+  return inputs.targets.reduce(
+    (lastPromise, target) =>
+      lastPromise.then(() =>
+        nx([
+          'run-many',
+          `--target=${target}`,
+          `--projects=${inputs.projects.join(',')}`,
+          ...args,
+        ]),
+      ),
+    Promise.resolve(),
+  );
 }
 
 async function runNxAffected(
