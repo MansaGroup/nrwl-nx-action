@@ -105,16 +105,10 @@ export async function runNx(inputs: Inputs): Promise<void> {
     }
   }
 
-  const nxArgs: string[] = [];
-
-  if (inputs.parallel) {
-    nxArgs.push(`--parallel=${inputs.parallel}`);
-  }
-
-  const args =
-    inputs.args.length > 0
-      ? ([...nxArgs, '--', inputs.args] as const)
-      : ([...nxArgs] as const);
+  const args: readonly string[] = [
+    `--parallel=${inputs.parallel}`,
+    inputs.args,
+  ];
 
   if (inputs.projects.length > 0) {
     return runNxProjects(inputs, args);
