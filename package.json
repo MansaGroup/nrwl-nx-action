@@ -46,7 +46,7 @@
   "devDependencies": {
     "@commitlint/cli": "17.4.2",
     "@commitlint/config-conventional": "17.4.2",
-    "@octokit/webhooks": "10.3.0",
+    "@octokit/webhooks": "10.7.0",
     "@tsconfig/node16-strictest": "1.0.4",
     "@types/jest": "29.2.4",
     "@typescript-eslint/eslint-plugin": "5.40.1",
