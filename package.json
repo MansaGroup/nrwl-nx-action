@@ -68,7 +68,7 @@
     "jest-sonar": "0.2.15",
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
-    "ts-jest": "29.0.3",
+    "ts-jest": "29.0.5",
     "typescript": "4.8.4"
   },
   "dependencies": {
